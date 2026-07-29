@@ -1,0 +1,5 @@
+scapy
+flask
+python-nmap
+flask-cors
+werkzeug

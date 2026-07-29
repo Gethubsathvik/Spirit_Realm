@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package packet;
+
+option go_package = "github.com/spirit-realm/packet-service/proto;pb";
+
+// Packet service definition
+service PacketService {
+  rpc ProcessPacket (PacketRequest) returns (PacketResponse);
+  rpc GetStats (Empty) returns (StatsResponse);
+}
+
+// Request message for processing a packet
+message PacketRequest {
+  string source_ip = 1;
+  string destination_ip = 2;
+  uint32 source_port = 3;
+  uint32 destination_port = 4;
+  string protocol = 5;
+  bytes data = 6;
+  int64 timestamp = 7;
+}
+
+// Response message after processing a processed packet
+message PacketResponse {
+  bool processed = 1;
+  int64 timestamp = 2;
+  string result = 3;
+}
+
+// Empty message
+message Empty {}
+
+// Response message for statistics
+message StatsResponse {
+  uint64 packets_processed = 1;
+  uint64 packets_dropped = 2;
+  uint64 bytes_processed = 3;
+  int64 last_updated = 4;
+}

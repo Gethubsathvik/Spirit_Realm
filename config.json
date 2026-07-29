@@ -1,0 +1,62 @@
+{
+  "network": {
+    "subnet": "192.168.1.0/24",
+    "interface": "Wi-Fi",
+    "scan_interval": 60
+  },
+  "security": {
+    "enable_firewall_blocking": true,
+    "enable_tcp_reset": true,
+    "rate_limit": 100,
+    "rate_limit_window": 60,
+    "session_timeout": 3600
+  },
+  "detection": {
+    "port_scan_threshold": 10,
+    "port_scan_window": 300,
+    "ddos_threshold": 20,
+    "ddos_window": 60
+  },
+  "dashboard": {
+    "host": "127.0.0.1",
+    "port": 5000,
+    "debug": false,
+    "theme": "dark"
+  },
+  "device_profiles": {
+    "default": {
+      "allowed_ports": [80, 443],
+      "risk_level": "medium"
+    },
+    "router": {
+      "allowed_ports": [80, 443, 22, 53],
+      "risk_level": "high"
+    },
+    "camera": {
+      "allowed_ports": [80, 443, 8080],
+      "risk_level": "medium"
+    },
+    "printer": {
+      "allowed_ports": [80, 443, 9100],
+      "risk_level": "low"
+    },
+    "workstation": {
+      "allowed_ports": [80, 443, 445, 3389],
+      "risk_level": "high"
+    },
+    "nas": {
+      "allowed_ports": [80, 443, 445, 22],
+      "risk_level": "high"
+    }
+  },
+  "logging": {
+    "level": "INFO",
+    "file": "fire_security.log",
+    "console_output": true
+  },
+  "api": {
+    "enable": true,
+    "key_required": true,
+    "max_results": 500
+  }
+}
