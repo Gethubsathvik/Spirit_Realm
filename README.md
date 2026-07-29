@@ -25,76 +25,91 @@ Spirit Realm is an autonomous network security enforcement system that monitors 
 - ⚡ **Polyglot Architecture** — Combines Python, Go, C, and Node.js for optimal performance
 
 ---
-
-## 🏗️ Architecture
-
-### 📐 MVC + Service + Microservices Structure
-
+## 🏗️ Architecture 
 Spirit Realm follows a **Model-View-Controller (MVC)** pattern with a **service layer** separating business logic from routing, enhanced with **microservices** for performance-critical components:
 
-```
+ 📁 Files
+ 
 Spirit Realm/
-├── spirit_realm.py             # 🎬 Main Orchestrator (Python)
+├── spirit_realm.py             # 🎬 Main orchestrator (Python)
 ├── setup.py                    # 🔧 Interactive setup & management tool
 ├── config.json                 # ⚙️ Configuration template
 ├── requirements.txt            # 📦 Python dependencies
 ├── go.mod                      # 🐹 Go module definition
-├── package.json                # 📦 Node.js dependencies
+├── go.sum                      # 🐹 Go module checksums
+├── package.json                # 📦 Node.js dependencies (root)
 ├── README.md                   # 📖 This file
 ├── API_DOCUMENTATION.md        # 📚 Complete API reference
 ├── QUICKSTART.md               # 🚀 Quick start guide
 ├── CHANGELOG.md                # 📝 Version history
 ├── LICENSE                     # 📄 MIT License
 ├── spirit_security.log         # 📝 Runtime log (auto-created)
-└── security_log.db             # 💾 SQLite database (auto-created)
-
+├── security_log.db             # 💾 SQLite database (auto-created)
+│
 ├── app/
 │   ├── __init__.py
 │   ├── config.py               # 📋 Centralized configuration
 │   │
 │   ├── core/                   # 🧠 Shared services (Model layer)
 │   │   ├── __init__.py
-│   │   ├── database.py         #   SQLite data access layer
-│   │   ├── firewall_os.py      #   OS firewall integration layer
-│   │   └── logger.py           #   Centralized logging service
+│   │   ├── database.py         #   SQLite data access
+│   │   ├── firewall_os.py      #   OS firewall integration
+│   │   └── logger.py           #   Centralized logging
 │   │
-│   ├── services/               # 🔧 Cross-language service interfaces
+│   ├── services/               # ⚡ Cross-language services
 │   │   ├── __init__.py
-│   │   ├── packet_service.go   #   ⚡ High-performance packet processing (Go)
-│   │   ├── packet_service.h    #   Header for C packet inspection module
-│   │   └── packet_service.c    #   🚀 Low-level packet inspection (C)
+│   │   ├── packet_service/     #   High-performance packet processing
+│   │   │   ├── go.mod          #   Go module definition
+│   │   │   ├── main.go         #   Go service entry point
+│   │   │   ├── packet.go       #   Packet structures & handling
+│   │   │   └── handler.go      #   gRPC/HTTP handlers
+│   │   │
+│   │   ├── packet_inspector/   #   Low-level packet inspection (C)
+│   │   │   ├── packet_service.h    #   Header file
+│   │   │   ├── packet_service.c    #   Implementation
+│   │   │   └── Makefile          #   Build instructions
+│   │   │
+│   │   └── shared/             #   Shared interfaces
+│   │       └── packet_types.go #   Common data structures
 │   │
-│   ├── features/               # 🎯 Feature modules (MVC Controllers)
+│   ├── features/               # 🎯 Feature modules
 │   │   ├── __init__.py
 │   │   ├── auth/               #   🔐 Authentication feature
 │   │   │   ├── __init__.py
-│   │   │   ├── routes.py       #   🎮 Controller (Login/Logout Routes)
-│   │   │   └── services.py     #   🔧 Service (Auth Business Logic)
+│   │   │   ├── routes.py       #     Controller
+│   │   │   └── services.py     #     Service
 │   │   │
-│   │   ├── firewall/
+│   │   ├── firewall/           #   🛡️ Firewall feature
 │   │   │   ├── __init__.py
-│   │   │   ├── routes.py       #   🎮 Controller (Dashboard & API Routes)
-│   │   │   ├── services.py     #   🔧 Service (Enforcement Logic)
-│   │   │   ├── engine.py       #   🧠 Model (Firewall Engine + Threat Detection)
-│   │   │   └── sniffer.py      #   🔧 Service (Packet Inspection)
+│   │   │   ├── routes.py       #     Controller
+│   │   │   ├── services.py     #     Service
+│   │   │   ├── engine.py       #     Model (firewall engine)
+│   │   │   └── sniffer.py      #     Service (packet inspection interface)
 │   │   │
-│   │   └── devices/
+│   │   └── devices/            #   📡 Device management feature
 │   │       ├── __init__.py
-│   │       ├── routes.py       #   🎮 Controller (Device API Routes)
-│   │       ├── services.py     #   🔧 Service (Device CRUD Logic)
-│   │       └── scanner.py      #   🧠 Model (Discovery + Port Scanning)
+│   │       ├── routes.py       #     Controller
+│   │       ├── services.py     #     Service
+│   │       └── scanner.py      #     Model (discovery + scanning)
 │   │
-│   └── dashboard/              # 🖥️ Frontend dashboard (Node.js)
+│   └── dashboard/              # 🖥️ Frontend dashboard (Node.js/React)
 │       ├── package.json
-│       ├── server.js           # Express server
-│       ├── public/
+│       ├── src/
+│       │   ├── index.js
+│   │   ├── components/
+│   │   ├── services/
+│   │   └── public/
 │       │   ├── index.html
-│       │   ├── style.css
-│       │   └── script.js
-│       └── src/
-│           ├── components/
-│           └── utils/
+│   │   ├── style.css
+│   │   └── script.js
+│
+└── docker/
+    ├── Dockerfile.python       # Python service container
+    ├── Dockerfile.go           # Go packet service container
+    ├── Dockerfile.node         # Node.js dashboard container
+    └── docker-compose.yml      # Orchestration
 ```
+
 
 **How MVC works in Spirit Realm:**
 
@@ -354,89 +369,6 @@ Spirit Realm automatically identifies and manages devices:
 | Fragmentation Attack | Invalid IP fragments | MEDIUM | Log + Drop |
 
 ---
-
-## 📁 File Structure
-
-```
-Spirit Realm/
-├── spirit_realm.py             # 🎬 Main orchestrator (Python)
-├── setup.py                    # 🔧 Interactive setup & management tool
-├── config.json                 # ⚙️ Configuration template
-├── requirements.txt            # 📦 Python dependencies
-├── go.mod                      # 🐹 Go module definition
-├── go.sum                      # 🐹 Go module checksums
-├── package.json                # 📦 Node.js dependencies (root)
-├── README.md                   # 📖 This file
-├── API_DOCUMENTATION.md        # 📚 Complete API reference
-├── QUICKSTART.md               # 🚀 Quick start guide
-├── CHANGELOG.md                # 📝 Version history
-├── LICENSE                     # 📄 MIT License
-├── spirit_security.log         # 📝 Runtime log (auto-created)
-├── security_log.db             # 💾 SQLite database (auto-created)
-│
-├── app/
-│   ├── __init__.py
-│   ├── config.py               # 📋 Centralized configuration
-│   │
-│   ├── core/                   # 🧠 Shared services (Model layer)
-│   │   ├── __init__.py
-│   │   ├── database.py         #   SQLite data access
-│   │   ├── firewall_os.py      #   OS firewall integration
-│   │   └── logger.py           #   Centralized logging
-│   │
-│   ├── services/               # ⚡ Cross-language services
-│   │   ├── __init__.py
-│   │   ├── packet_service/     #   High-performance packet processing
-│   │   │   ├── go.mod          #   Go module definition
-│   │   │   ├── main.go         #   Go service entry point
-│   │   │   ├── packet.go       #   Packet structures & handling
-│   │   │   └── handler.go      #   gRPC/HTTP handlers
-│   │   │
-│   │   ├── packet_inspector/   #   Low-level packet inspection (C)
-│   │   │   ├── packet_service.h    #   Header file
-│   │   │   ├── packet_service.c    #   Implementation
-│   │   │   └── Makefile          #   Build instructions
-│   │   │
-│   │   └── shared/             #   Shared interfaces
-│   │       └── packet_types.go #   Common data structures
-│   │
-│   ├── features/               # 🎯 Feature modules
-│   │   ├── __init__.py
-│   │   ├── auth/               #   🔐 Authentication feature
-│   │   │   ├── __init__.py
-│   │   │   ├── routes.py       #     Controller
-│   │   │   └── services.py     #     Service
-│   │   │
-│   │   ├── firewall/           #   🛡️ Firewall feature
-│   │   │   ├── __init__.py
-│   │   │   ├── routes.py       #     Controller
-│   │   │   ├── services.py     #     Service
-│   │   │   ├── engine.py       #     Model (firewall engine)
-│   │   │   └── sniffer.py      #     Service (packet inspection interface)
-│   │   │
-│   │   └── devices/            #   📡 Device management feature
-│   │       ├── __init__.py
-│   │       ├── routes.py       #     Controller
-│   │       ├── services.py     #     Service
-│   │       └── scanner.py      #     Model (discovery + scanning)
-│   │
-│   └── dashboard/              # 🖥️ Frontend dashboard (Node.js/React)
-│       ├── package.json
-│       ├── src/
-│       │   ├── index.js
-│   │   ├── components/
-│   │   ├── services/
-│   │   └── public/
-│       │   ├── index.html
-│   │   ├── style.css
-│   │   └── script.js
-│
-└── docker/
-    ├── Dockerfile.python       # Python service container
-    ├── Dockerfile.go           # Go packet service container
-    ├── Dockerfile.node         # Node.js dashboard container
-    └── docker-compose.yml      # Orchestration
-```
 
 ---
 
