@@ -27,9 +27,11 @@ Spirit Realm is an autonomous network security enforcement system that monitors 
 ---
 ## 🏗️ Architecture 
 Spirit Realm follows a **Model-View-Controller (MVC)** pattern with a **service layer** separating business logic from routing, enhanced with **microservices** for performance-critical components:
+ ---
 
- 📁 Files
- 
+## 📁 File Structure
+
+```
 Spirit Realm/
 ├── spirit_realm.py             # 🎬 Main orchestrator (Python)
 ├── setup.py                    # 🔧 Interactive setup & management tool
