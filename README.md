@@ -13,6 +13,24 @@
 
 Spirit Realm is an autonomous network security enforcement system that monitors your network for unauthorized device behavior and enforces security policies automatically. It combines advanced threat detection, device profiling, and automated response mechanisms.
 
+
+
+          CLIENT                           SERVER
+            |                                |
+            |  1. SYN                       |
+            |------------------------------->|
+            |                                |
+            |  2. SYN + ACK                  |
+            |<-------------------------------|
+            |                                |
+            |  3. ACK                       |
+            |------------------------------->|
+            |                                |
+            |       Connection Established   |
+            |<==============================>|
+
+
+
 ### 🚀 Key Capabilities
 
 - 🛡️ **Autonomous Threat Detection** — Port scanning, DDoS patterns, malware signatures
