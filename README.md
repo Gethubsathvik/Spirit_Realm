@@ -14,6 +14,8 @@
 Spirit Realm is an autonomous network security enforcement system that monitors your network for unauthorized device behavior and enforces security policies automatically. It combines advanced threat detection, device profiling, and automated response mechanisms.
 
 
+Three-way handshake
+
 
           CLIENT                           SERVER
             |                                |
