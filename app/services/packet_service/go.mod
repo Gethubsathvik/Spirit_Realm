@@ -1,4 +1,4 @@
-module github.com/yourusername/spirit-realm/app/services/packet_service
+module github.com/Gethubsathvik/Spirit_Realm/app/services/packet_service
 
 go 1.22
 
