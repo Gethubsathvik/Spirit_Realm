@@ -1,4 +1,4 @@
-module github.com/Gethubsathvik/Spirit_Realm/app/services/packet_service
+replace github.com/Gethubsathvik/Spirit_Realm/app/services/packet_service/proto => ./proto
 
 go 1.22
 
