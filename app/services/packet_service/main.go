@@ -5,7 +5,7 @@ import (
 	"log"
 	"net"
 
-	pb "github.com/Gethubsathvik/Spirit_Realm/app/services/packet_service/proto"
+	pb "./proto"
 	"google.golang.org/grpc"
 )
 
