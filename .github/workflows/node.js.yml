@@ -23,7 +23,7 @@ jobs:
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-     # 2. Setup & Build Go Packet Service
+      # 2. Setup & Build Go Packet Service
       - name: Setup Go
         uses: actions/setup-go@v5
         with:
