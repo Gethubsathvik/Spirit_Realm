@@ -5,7 +5,7 @@ import (
 	"log"
 	"net"
 
-	pb "github.com/yourusername/spirit-realm/app/services/packet_service/proto"
+	pb "github.com/Gethubsathvik/Spirit_Realm/app/services/packet_service/proto"
 	"google.golang.org/grpc"
 )
 
