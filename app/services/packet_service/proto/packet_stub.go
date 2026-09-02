@@ -3,58 +3,64 @@ package pb
 import (
 	"context"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
-// Minimal, hand-written stubs to satisfy builds until real generated protobuf code is added.
-// These replicate only the symbols used by app/services/packet_service/main.go.
+// Generated-like minimal stubs for the proto messages and service so the module builds.
+// These are intended to behave like protoc output (names/types/getters), but are hand-written
+// and minimal. Replace with real generated .pb.go/.pb_grpc.go from protoc when available.
 
-// PacketRequest is a minimal request type with getters used by main.go.
+// PacketRequest mirrors the fields in packet.proto.
 type PacketRequest struct {
-	SrcIp  int32
-	SrcPort int32
-	DstIp  int32
-	DstPort int32
+	SourceIp      string
+	DestinationIp string
+	SourcePort    uint32
+	DestinationPort uint32
+	Protocol      string
+	Data          []byte
+	Timestamp     int64
 }
 
-func (p *PacketRequest) GetSrcIp() int32 {
+func (p *PacketRequest) GetSourceIp() string {
+	if p == nil {
+		return ""
+	}
+	return p.SourceIp
+}
+
+func (p *PacketRequest) GetDestinationIp() string {
+	if p == nil {
+		return ""
+	}
+	return p.DestinationIp
+}
+
+func (p *PacketRequest) GetSourcePort() uint32 {
 	if p == nil {
 		return 0
 	}
-	return p.SrcIp
+	return p.SourcePort
 }
 
-func (p *PacketRequest) GetSrcPort() int32 {
+func (p *PacketRequest) GetDestinationPort() uint32 {
 	if p == nil {
 		return 0
 	}
-	return p.SrcPort
+	return p.DestinationPort
 }
 
-func (p *PacketRequest) GetDstIp() int32 {
-	if p == nil {
-		return 0
-	}
-	return p.DstIp
-}
-
-func (p *PacketRequest) GetDstPort() int32 {
-	if p == nil {
-		return 0
-	}
-	return p.DstPort
-}
-
-// PacketResponse is the response type expected by main.go.
+// PacketResponse mirrors packet.proto response.
 type PacketResponse struct {
 	Processed bool
 	Timestamp int64
 	Result    string
 }
 
-// Empty is a placeholder for an empty request.
+// Empty placeholder
 type Empty struct{}
 
-// StatsResponse is the response type expected by main.go.
+// StatsResponse mirrors packet.proto
 type StatsResponse struct {
 	PacketsProcessed uint64
 	PacketsDropped   uint64
@@ -68,17 +74,18 @@ type PacketServiceServer interface {
 	GetStats(ctx context.Context, req *Empty) (*StatsResponse, error)
 }
 
-// UnimplementedPacketServiceServer can be embedded to have forward compatible implementations.
+// UnimplementedPacketServiceServer can be embedded for forward compatibility.
 type UnimplementedPacketServiceServer struct{}
 
 func (*UnimplementedPacketServiceServer) ProcessPacket(ctx context.Context, req *PacketRequest) (*PacketResponse, error) {
-	return nil, grpc.Errorf(grpc.Code(), "method ProcessPacket not implemented")
+	return nil, status.Errorf(codes.Unimplemented, "method ProcessPacket not implemented")
 }
 
 func (*UnimplementedPacketServiceServer) GetStats(ctx context.Context, req *Empty) (*StatsResponse, error) {
-	return nil, grpc.Errorf(grpc.Code(), "method GetStats not implemented")
+	return nil, status.Errorf(codes.Unimplemented, "method GetStats not implemented")
 }
 
-// RegisterPacketServiceServer is a minimal registration function used by main.go.
-// It intentionally does nothing — for a real server, generate code from the .proto and use that.
+// RegisterPacketServiceServer is intentionally minimal to satisfy main.go registration call.
+// A real generated file registers service descriptors so gRPC can route calls; this shim
+// leaves registration as a no-op. Replace with generated registration when available.
 func RegisterPacketServiceServer(s grpc.ServiceRegistrar, srv PacketServiceServer) {}
