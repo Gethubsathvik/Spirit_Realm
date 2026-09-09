@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package packet;
 
-option go_package = "github.com/spirit-realm/packet-service/proto;pb";
+option go_package = "github.com/Gethubsathvik/Spirit_Realm/app/services/packet_service/proto;pb";
 
 // Packet service definition
 service PacketService {

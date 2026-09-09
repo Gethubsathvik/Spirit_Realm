@@ -9,10 +9,26 @@
 ![Scapy](https://img.shields.io/badge/Scapy-Packet%20Crafting-orange?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 
+
+# Spirit Realm
+
+Welcome to the Spirit Realm! This is a community-driven project that aims to bring together people who are interested in exploring the spiritual realm and sharing their experiences, insights, and knowledge.
+
+## 🚀 Getting Started
+
+To get started with the Spirit Realm, follow these steps:
+
+1. Fork this repository to your own GitHub account.
+2. Clone the forked repository to your local machine.
+3. Create a new branch for your changes.
+4. Make your changes to the project.
+5. Commit your changes and push them to your forked repository.
+6. Submit a pull request to the original repository.
+
+
 ## 🎯 Overview
 
 Spirit Realm is an autonomous network security enforcement system that monitors your network for unauthorized device behavior and enforces security policies automatically. It combines advanced threat detection, device profiling, and automated response mechanisms.
-
 
 
 Three-way handshake
@@ -46,76 +62,93 @@ Three-way handshake
 - ⚡ **Polyglot Architecture** — Combines Python, Go, C, and Node.js for optimal performance
 
 ---
-
-## 🏗️ Architecture
-
-### 📐 MVC + Service + Microservices Structure
-
+## 🏗️ Architecture 
 Spirit Realm follows a **Model-View-Controller (MVC)** pattern with a **service layer** separating business logic from routing, enhanced with **microservices** for performance-critical components:
+ ---
+
+## 📁 File Structure
 
 ```
 Spirit Realm/
-├── spirit_realm.py             # 🎬 Main Orchestrator (Python)
+├── spirit_realm.py             # 🎬 Main orchestrator (Python)
 ├── setup.py                    # 🔧 Interactive setup & management tool
 ├── config.json                 # ⚙️ Configuration template
 ├── requirements.txt            # 📦 Python dependencies
 ├── go.mod                      # 🐹 Go module definition
-├── package.json                # 📦 Node.js dependencies
+├── go.sum                      # 🐹 Go module checksums
+├── package.json                # 📦 Node.js dependencies (root)
 ├── README.md                   # 📖 This file
 ├── API_DOCUMENTATION.md        # 📚 Complete API reference
 ├── QUICKSTART.md               # 🚀 Quick start guide
 ├── CHANGELOG.md                # 📝 Version history
 ├── LICENSE                     # 📄 MIT License
 ├── spirit_security.log         # 📝 Runtime log (auto-created)
-└── security_log.db             # 💾 SQLite database (auto-created)
-
+├── security_log.db             # 💾 SQLite database (auto-created)
+│
 ├── app/
 │   ├── __init__.py
 │   ├── config.py               # 📋 Centralized configuration
 │   │
 │   ├── core/                   # 🧠 Shared services (Model layer)
 │   │   ├── __init__.py
-│   │   ├── database.py         #   SQLite data access layer
-│   │   ├── firewall_os.py      #   OS firewall integration layer
-│   │   └── logger.py           #   Centralized logging service
+│   │   ├── database.py         #   SQLite data access
+│   │   ├── firewall_os.py      #   OS firewall integration
+│   │   └── logger.py           #   Centralized logging
 │   │
-│   ├── services/               # 🔧 Cross-language service interfaces
+│   ├── services/               # ⚡ Cross-language services
 │   │   ├── __init__.py
-│   │   ├── packet_service.go   #   ⚡ High-performance packet processing (Go)
-│   │   ├── packet_service.h    #   Header for C packet inspection module
-│   │   └── packet_service.c    #   🚀 Low-level packet inspection (C)
+│   │   ├── packet_service/     #   High-performance packet processing
+│   │   │   ├── go.mod          #   Go module definition
+│   │   │   ├── main.go         #   Go service entry point
+│   │   │   ├── packet.go       #   Packet structures & handling
+│   │   │   └── handler.go      #   gRPC/HTTP handlers
+│   │   │
+│   │   ├── packet_inspector/   #   Low-level packet inspection (C)
+│   │   │   ├── packet_service.h    #   Header file
+│   │   │   ├── packet_service.c    #   Implementation
+│   │   │   └── Makefile          #   Build instructions
+│   │   │
+│   │   └── shared/             #   Shared interfaces
+│   │       └── packet_types.go #   Common data structures
 │   │
-│   ├── features/               # 🎯 Feature modules (MVC Controllers)
+│   ├── features/               # 🎯 Feature modules
 │   │   ├── __init__.py
 │   │   ├── auth/               #   🔐 Authentication feature
 │   │   │   ├── __init__.py
-│   │   │   ├── routes.py       #   🎮 Controller (Login/Logout Routes)
-│   │   │   └── services.py     #   🔧 Service (Auth Business Logic)
+│   │   │   ├── routes.py       #     Controller
+│   │   │   └── services.py     #     Service
 │   │   │
-│   │   ├── firewall/
+│   │   ├── firewall/           #   🛡️ Firewall feature
 │   │   │   ├── __init__.py
-│   │   │   ├── routes.py       #   🎮 Controller (Dashboard & API Routes)
-│   │   │   ├── services.py     #   🔧 Service (Enforcement Logic)
-│   │   │   ├── engine.py       #   🧠 Model (Firewall Engine + Threat Detection)
-│   │   │   └── sniffer.py      #   🔧 Service (Packet Inspection)
+│   │   │   ├── routes.py       #     Controller
+│   │   │   ├── services.py     #     Service
+│   │   │   ├── engine.py       #     Model (firewall engine)
+│   │   │   └── sniffer.py      #     Service (packet inspection interface)
 │   │   │
-│   │   └── devices/
+│   │   └── devices/            #   📡 Device management feature
 │   │       ├── __init__.py
-│   │       ├── routes.py       #   🎮 Controller (Device API Routes)
-│   │       ├── services.py     #   🔧 Service (Device CRUD Logic)
-│   │       └── scanner.py      #   🧠 Model (Discovery + Port Scanning)
+│   │       ├── routes.py       #     Controller
+│   │       ├── services.py     #     Service
+│   │       └── scanner.py      #     Model (discovery + scanning)
 │   │
-│   └── dashboard/              # 🖥️ Frontend dashboard (Node.js)
+│   └── dashboard/              # 🖥️ Frontend dashboard (Node.js/React)
 │       ├── package.json
-│       ├── server.js           # Express server
-│       ├── public/
+│       ├── src/
+│       │   ├── index.js
+│   │   ├── components/
+│   │   ├── services/
+│   │   └── public/
 │       │   ├── index.html
-│       │   ├── style.css
-│       │   └── script.js
-│       └── src/
-│           ├── components/
-│           └── utils/
+│   │   ├── style.css
+│   │   └── script.js
+│
+└── docker/
+    ├── Dockerfile.python       # Python service container
+    ├── Dockerfile.go           # Go packet service container
+    ├── Dockerfile.node         # Node.js dashboard container
+    └── docker-compose.yml      # Orchestration
 ```
+
 
 **How MVC works in Spirit Realm:**
 
@@ -376,89 +409,6 @@ Spirit Realm automatically identifies and manages devices:
 
 ---
 
-## 📁 File Structure
-
-```
-Spirit Realm/
-├── spirit_realm.py             # 🎬 Main orchestrator (Python)
-├── setup.py                    # 🔧 Interactive setup & management tool
-├── config.json                 # ⚙️ Configuration template
-├── requirements.txt            # 📦 Python dependencies
-├── go.mod                      # 🐹 Go module definition
-├── go.sum                      # 🐹 Go module checksums
-├── package.json                # 📦 Node.js dependencies (root)
-├── README.md                   # 📖 This file
-├── API_DOCUMENTATION.md        # 📚 Complete API reference
-├── QUICKSTART.md               # 🚀 Quick start guide
-├── CHANGELOG.md                # 📝 Version history
-├── LICENSE                     # 📄 MIT License
-├── spirit_security.log         # 📝 Runtime log (auto-created)
-├── security_log.db             # 💾 SQLite database (auto-created)
-│
-├── app/
-│   ├── __init__.py
-│   ├── config.py               # 📋 Centralized configuration
-│   │
-│   ├── core/                   # 🧠 Shared services (Model layer)
-│   │   ├── __init__.py
-│   │   ├── database.py         #   SQLite data access
-│   │   ├── firewall_os.py      #   OS firewall integration
-│   │   └── logger.py           #   Centralized logging
-│   │
-│   ├── services/               # ⚡ Cross-language services
-│   │   ├── __init__.py
-│   │   ├── packet_service/     #   High-performance packet processing
-│   │   │   ├── go.mod          #   Go module definition
-│   │   │   ├── main.go         #   Go service entry point
-│   │   │   ├── packet.go       #   Packet structures & handling
-│   │   │   └── handler.go      #   gRPC/HTTP handlers
-│   │   │
-│   │   ├── packet_inspector/   #   Low-level packet inspection (C)
-│   │   │   ├── packet_service.h    #   Header file
-│   │   │   ├── packet_service.c    #   Implementation
-│   │   │   └── Makefile          #   Build instructions
-│   │   │
-│   │   └── shared/             #   Shared interfaces
-│   │       └── packet_types.go #   Common data structures
-│   │
-│   ├── features/               # 🎯 Feature modules
-│   │   ├── __init__.py
-│   │   ├── auth/               #   🔐 Authentication feature
-│   │   │   ├── __init__.py
-│   │   │   ├── routes.py       #     Controller
-│   │   │   └── services.py     #     Service
-│   │   │
-│   │   ├── firewall/           #   🛡️ Firewall feature
-│   │   │   ├── __init__.py
-│   │   │   ├── routes.py       #     Controller
-│   │   │   ├── services.py     #     Service
-│   │   │   ├── engine.py       #     Model (firewall engine)
-│   │   │   └── sniffer.py      #     Service (packet inspection interface)
-│   │   │
-│   │   └── devices/            #   📡 Device management feature
-│   │       ├── __init__.py
-│   │       ├── routes.py       #     Controller
-│   │       ├── services.py     #     Service
-│   │       └── scanner.py      #     Model (discovery + scanning)
-│   │
-│   └── dashboard/              # 🖥️ Frontend dashboard (Node.js/React)
-│       ├── package.json
-│       ├── src/
-│       │   ├── index.js
-│   │   ├── components/
-│   │   ├── services/
-│   │   └── public/
-│       │   ├── index.html
-│   │   ├── style.css
-│   │   └── script.js
-│
-└── docker/
-    ├── Dockerfile.python       # Python service container
-    ├── Dockerfile.go           # Go packet service container
-    ├── Dockerfile.node         # Node.js dashboard container
-    └── docker-compose.yml      # Orchestration
-```
-
 ---
 
 ## 🔧 Configuration
@@ -703,3 +653,66 @@ Spirit Realm follows a **polyglot microservices** architecture. To contribute:
 
 > **Effective security requires vigilance, adaptation, and the right tools for the job.**  
 > Choose the right language for each task, and let your defenses evolve with the threats. 🔥
+
+
+# Spirit Realm
+
+Welcome to the Spirit Realm, where the power of multiple programming languages converges to create a robust and adaptable security framework. This project is designed to harness the strengths of various languages, each with its unique set of features and capabilities, to provide a comprehensive security solution.
+
+## 🧙‍♂️ Features
+
+- **Polyglot Security**: Leverage the strengths of multiple programming languages to create a more resilient security framework.
+- **Cross-Language Communication**: Integrate C, Python, and Node.js/React to create a cohesive and efficient system.
+
+## 📚 Documentation
+
+Stay up-to-date with the latest features and best practices by reading our comprehensive documentation. Whether you're a seasoned developer or just starting out, our documentation is here to guide you through the process of building a secure and efficient system.
+
+## 🚀 Getting Started
+
+To get started with the Spirit Realm, follow these simple steps:
+
+1. Clone the repository:
+   ```
+   git clone https://github.com/your-username/spirit-realm.git
+   ```
+2. Install the required dependencies:
+   ```
+   npm install
+   ```
+3. Run the project:
+   ```
+   npm start
+
+   ```
+4. Explore the various components and modules to understand their functionality and how they contribute to the overall security solution.
+
+## 🤝 Contributing
+
+We welcome contributions from the community to help improve the Spirit Realm. Whether you're a developer, security expert, or just someone with a passion for security, your input is valuable. To contribute, fork the repository, make your changes, and submit a pull request.
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 📫 Contact
+
+If you have any questions or need assistance, please feel free to contact us at [your-email@example.com](mailto:your-email@example.com).
+
+## 📄 Acknowledgments
+
+We would like to thank the following contributors and organizations for their support and contributions to the Spirit Realm:
+
+- [Contributor 1](https://github.com/contributor1)
+- [Contributor 2](https://github.com/contributor2)
+- [Organization 1](https://github.com/organization1)
+- [Organization 2](https://github.com/organization2)
+
+## 📄 Disclaimer
+
+This project is for educational purposes only. The authors and contributors are not responsible for any misuse or damage caused by the use of this project.
+
+## 📄 Contributing
+
+We welcome contributions to the Spirit Realm. Please read our [contributing guidelines](CONTRIBUTING.md) for more information on how to contribute.
+
