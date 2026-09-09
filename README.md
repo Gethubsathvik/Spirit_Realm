@@ -13,6 +13,27 @@
 
 Spirit Realm is an autonomous network security enforcement system that monitors your network for unauthorized device behavior and enforces security policies automatically. It combines advanced threat detection, device profiling, and automated response mechanisms.
 
+
+
+Three-way handshake
+
+
+          CLIENT                           SERVER
+            |                                |
+            |  1. SYN                       |
+            |------------------------------->|
+            |                                |
+            |  2. SYN + ACK                  |
+            |<-------------------------------|
+            |                                |
+            |  3. ACK                       |
+            |------------------------------->|
+            |                                |
+            |       Connection Established   |
+            |<==============================>|
+
+
+
 ### 🚀 Key Capabilities
 
 - 🛡️ **Autonomous Threat Detection** — Port scanning, DDoS patterns, malware signatures
@@ -233,14 +254,14 @@ set INTERFACE=Wi-Fi        # Windows
 
 ### 📋 Prerequisites
 
-- Python 3.8+
-- Go 1.22+ (for packet processing microservice)
-- GCC compiler (for C packet inspection module)
-- Node.js 18.x+ (for dashboard frontend)
-- pip
-- Root/Administrator privileges (for firewall rules and packet capture)
+- 🐍 Python 3.8+
+- 🐹 Go 1.22+ (for packet processing microservice)
+- 🔧 GCC compiler (for C packet inspection module)
+- 📦 Node.js 18.x+ (for dashboard frontend)
+- 📥 pip
+- 🔑 Root/Administrator privileges (for firewall rules and packet capture)
 
-### ⚡ Installation
+### 🐍 Installation
 
 ```bash
 # 1. Clone or navigate to the project
@@ -264,7 +285,7 @@ python setup.py
 
 ### ▶️ Running Spirit Realm
 
-**Method 1: Direct execution**
+**🔹 Method 1: Direct execution**
 ```bash
 # Windows (Run as Administrator)
 python spirit_realm.py
@@ -273,18 +294,18 @@ python spirit_realm.py
 sudo python3 spirit_realm.py
 ```
 
-**Method 2: Using the setup tool**
+**🔹 Method 2: Using the setup tool**
 ```bash
 python setup.py
 # Select option 7: Start Spirit Realm Service
 ```
 
-**Method 3: Docker (recommended for production)**
+**🔹 Method 3: Docker (recommended for production)**
 ```bash
 docker-compose up --build
 ```
 
-**Method 4: With custom settings**
+**🔹 Method 4: With custom settings**
 ```bash
 # Override subnet and interface
 set SUBNET=10.0.0.0/24
@@ -299,7 +320,7 @@ Open your browser and navigate to:
 http://127.0.0.1:5000
 ```
 
-**Default Credentials:**
+**🔑 Default Credentials:**
 - Username: `admin`
 - Password: `Spirit@2026!`
 
@@ -520,7 +541,7 @@ export DEBUG="true"
 
 ## 🛠️ Troubleshooting
 
-### Dashboard not loading?
+### 📭 Dashboard not loading?
 ```bash
 # Check if service is running
 netstat -an | findstr 5000    # Windows
@@ -533,7 +554,7 @@ docker-compose ps
 tail -f spirit_security.log
 ```
 
-### Packet service not responding?
+### 📡 Packet service not responding?
 ```bash
 # Check Go service
 netstat -an | findstr 50051   # Windows
@@ -546,7 +567,7 @@ grpcurl -plaintext localhost:50051 list
 journalctl -u spirit-packet-service  # Linux
 ```
 
-### C module not loading?
+### 🔬 C module not loading?
 ```bash
 # Verify shared library exists
 ls -la app/services/packet_inspector/
@@ -556,7 +577,7 @@ ldd app/services/packet_inspector/packet_service.so  # Linux
 otool -L app/services/packet_inspector/packet_service.dylib  # macOS
 ```
 
-### Permission denied on Linux/macOS?
+### 🚫 Permission denied on Linux/macOS?
 ```bash
 # Run with appropriate privileges
 sudo python3 spirit_realm.py
@@ -568,7 +589,7 @@ sudo setcap cap_net_raw,cap_net_admin=eip $(which python3)
 sudo setcap cap_net_raw,cap_net_admin=eip ./app/services/packet_service/main
 ```
 
-### Build issues?
+### 🔨 Build issues?
 ```bash
 # Go build problems
 cd app/services/packet_service && go build -v
@@ -586,14 +607,14 @@ cd app/dashboard && npm run build
 
 | Document | Description |
 |----------|-------------|
-| [README.md](README.md) | This file — overview, architecture, quick start |
-| [API_DOCUMENTATION.md](API_DOCUMENTATION.md) | Complete REST & gRPC API reference with examples |
-| [QUICKSTART.md](QUICKSTART.md) | Step-by-step setup guide for all platforms |
-| [CHANGELOG.md](CHANGELOG.md) | Version history and feature changes |
-| [ARCHITECTURE.md](ARCHITECTURE.md) | Detailed architecture decisions |
-| [DEVELOPMENT.md](DEVELOPMENT.md) | Contribution guidelines and development setup |
-| [DEPLOYMENT.md](DEPLOYMENT.md) | Production deployment strategies |
-| [SECURITY.md](SECURITY.md) | Security best practices and threat model |
+| 📖 [README.md](README.md) | This file — overview, architecture, quick start |
+| 📚 [API_DOCUMENTATION.md](API_DOCUMENTATION.md) | Complete REST & gRPC API reference with examples |
+| 🚀 [QUICKSTART.md](QUICKSTART.md) | Step-by-step setup guide for all platforms |
+| 📝 [CHANGELOG.md](CHANGELOG.md) | Version history and feature changes |
+| 🧱 [ARCHITECTURE.md](ARCHITECTURE.md) | Detailed architecture decisions |
+| 🤝 [DEVELOPMENT.md](DEVELOPMENT.md) | Contribution guidelines and development setup |
+| ☁️ [DEPLOYMENT.md](DEPLOYMENT.md) | Production deployment strategies |
+| 🔐 [SECURITY.md](SECURITY.md) | Security best practices and threat model |
 
 ---
 
@@ -624,7 +645,7 @@ DEALINGS IN THE SOFTWARE.
 
 ---
 
-**Usage Authorization:**
+**📜 Usage Authorization:**
 - ✅ Use on networks you own or administer
 - ✅ Use with explicit written permission from network owner
 - ✅ Use for authorized security testing and monitoring
@@ -638,14 +659,14 @@ DEALINGS IN THE SOFTWARE.
 
 Spirit Realm follows a **polyglot microservices** architecture. To contribute:
 
-### Adding a New Feature (Python)
+### 🐍 Adding a New Feature (Python)
 1. Create a new feature directory under `app/features/`
 2. Add `routes.py` (controller), `services.py` (business logic), and model files
 3. Register the blueprint in `spirit_realm.py`
 4. Add database tables in `app/core/database.py`
 5. Update API documentation
 
-### Adding a New Service (Go)
+### 🐹 Adding a New Service (Go)
 1. Create service directory under `app/services/`
 2. Implement Go service with proper logging and error handling
 3. Add protobuf definitions if using gRPC
@@ -653,7 +674,7 @@ Spirit Realm follows a **polyglot microservices** architecture. To contribute:
 5. Add health check and metrics endpoints
 6. Create Dockerfile for containerization
 
-### Adding a Performance Module (C)
+### 🔬 Adding a Performance Module (C)
 1. Create module under `app/services/packet_inspector/`
 2. Implement header file with public functions for the performance-critical component
 3. Create a Python wrapper using ctypes/cffi
@@ -661,14 +682,14 @@ Spirit Realm follows a **polyglot microservices** architecture. To contribute:
 5. Ensure thread safety and proper error handling
 6. Write unit tests for the C module
 
-### Adding Frontend Features (Node.js/React)
+### ⚛️ Adding Frontend Features (Node.js/React)
 1. Create component under `app/dashboard/src/components/`
 2. Add state management if needed (Redux/Zustand)
 3. Implement API service layer for backend communication
 4. Add unit tests with Jest and React Testing Library
 5. Update styling with CSS modules or Tailwind
 
-### General Guidelines
+### 📋 General Guidelines
 - Follow existing code style and patterns
 - Write comprehensive tests for new features
 - Update documentation alongside code changes
