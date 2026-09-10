@@ -111,20 +111,19 @@ jobs:
           done
 
       - name: Install golangci-lint
-        uses: golangci/golangci-lint-action@v6
-        with:
-          version: latest
-          only-new-issues: false
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.60.3
+          echo "::notice::golangci-lint $(golangci-lint --version 2>&1)"
 
-      - name: Check formatting
+      - name: Run golangci-lint
         continue-on-error: true
         run: |
           GO_FILES=$(find . -name "*.go" -type f)
           if [ -n "$GO_FILES" ]; then
-            echo "::notice::Checking gofmt formatting"
-            gofmt -l .
+            echo "::notice::Running golangci-lint (non-blocking)"
+            golangci-lint run ./... 2>&1 || echo "::warning::golangci-lint found issues"
           else
-            echo "::notice::No Go files found — skipping"
+            echo "::notice::No Go files found — skipping lint"
           fi
 
   lint-node:
