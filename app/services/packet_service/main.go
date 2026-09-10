@@ -16,9 +16,9 @@ type server struct {
 
 // ProcessPacket implements the ProcessPacket method
 func (s *server) ProcessPacket(ctx context.Context, req *pb.PacketRequest) (*pb.PacketResponse, error) {
-	log.Printf("Received packet from %s:%d to %s:%d", 
-		intToIP(int(req.GetSrcIp())), intToPort(int(req.GetSrcPort())),
-		intToIP(int(req.GetDstIp())), intToPort(int(req.GetDstPort())))
+	log.Printf("Received packet from %s:%d to %s:%d",
+		sourceIPToString(req.GetSourceIp()), intToPort(int(req.GetSourcePort())),
+		destinationIPToString(req.GetDestinationIp()), intToPort(int(req.GetDestinationPort())))
 
 	// In a real implementation, we would process the packet here
 	// For now, we just acknowledge receipt
@@ -42,8 +42,12 @@ func (s *server) GetStats(ctx context.Context, req *pb.Empty) (*pb.StatsResponse
 }
 
 // Helper functions
-func intToIP(ip int) string {
-	return ""
+func sourceIPToString(ip string) string {
+	return ip
+}
+
+func destinationIPToString(ip string) string {
+	return ip
 }
 
 func intToPort(port int) int32 {
@@ -58,7 +62,7 @@ func main() {
 	s := grpc.NewServer()
 	pb.RegisterPacketServiceServer(s, &server{})
 	log.Printf("Server listening at %v", lis.Addr())
-	if err := s.Serve(); err != nil {
+	if err := s.Serve(lis); err != nil {
 		log.Fatalf("Failed to serve: %v", err)
 	}
 }
